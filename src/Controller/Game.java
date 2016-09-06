@@ -24,39 +24,37 @@ public class Game {
     private ArrayList<Maze> mazes = new ArrayList<Maze>();
     private int current_maze_in_mazes;
     private Avatar avatar;
-    private Drawer drawer = new Drawer(11, 11);
+    private Drawer drawer = new Drawer(10, 10);
 
     public Game(){
         
     }
-    public void game_init(){
+   
+    public void game_info() {
+        System.out.println("-------------------------------------------------");
+        System.out.println("Posicion Avatar: [" + avatar.getRow() + " ; " + avatar.getCol() + "]");
+
+        System.out.println("Inicio: [" + current_maze.getStart_row() + " ; " + current_maze.getStart_col() + "]");
+        System.out.println("Final: [" + current_maze.getEnd_row() + " ; " + current_maze.getEnd_col() + "]");
+
+        System.out.println("-------------------------------------------------");
+        System.out.println("Enter the command to use:");
+        System.out.println("up    -->  w");
+        System.out.println("down  -->  s");
+        System.out.println("right -->  d");
+        System.out.println("left  -->  a");
+        System.out.println("-------------------------------------------------");
+    }
+
+    public void game_init() {
         int movement_arrows, state, move;
         String action, movement_keyboard, straux;
         int interact_with_artefact;
         this.init();
         Scanner sc = new Scanner(System.in);
-        Scanner scint = new Scanner(System.in);
+        Scanner scint = new Scanner(System.in);        
         while (true) {
-            System.out.println("");
-            System.out.print("Fila del avatar: ");
-            System.out.println(avatar.getRow());
-            System.out.print("Columna del avatar: ");
-            System.out.println(avatar.getCol());
-
-            System.out.print("Inicio: ");
-            System.out.print(current_maze.getStart_row());
-            System.out.print("   ");
-            System.out.print(current_maze.getStart_col());
-            System.out.print("    Final: ");
-            System.out.print(current_maze.getEnd_row());
-            System.out.print("   ");
-            System.out.println(current_maze.getEnd_col());
-
-            System.out.println("Enter the command to use");
-            System.out.println("up    -->  w");
-            System.out.println("down  -->  s");
-            System.out.println("right -->  d");
-            System.out.println("left  -->  a");
+            game_info(); //print the movements and indications            
             movement_keyboard = sc.nextLine();
             move = 0;
             if (movement_keyboard.equals("w")) {
@@ -72,10 +70,11 @@ public class Game {
                 move = 4;
             }
             if ((5 - move) == 5) {
-                System.out.println("invalid move");
+                drawer.drawView(current_maze, avatar.getCol(), avatar.getRow());
+                System.out.println(">>>>>>>invalid move");
             } else {
                 state = play(move);
-                drawer.drawView(current_maze, avatar.getCol(), avatar.getRow());
+                //drawer.drawView(current_maze, avatar.getCol(), avatar.getRow());
                 if (state == 0){
                     //clean
                     System.out.println("You Lose");
@@ -83,13 +82,19 @@ public class Game {
                 } else //Runtime.getRuntime().exec("clear");
                 {
                     if (current_maze.is_prev(avatar.getRow(), avatar.getCol())) {
-                        System.out.println("You Win");
+                        drawer.clear();
+                        System.out.println("------------------------------------------------------");
+                        System.out.println("------------------------------------------------------");
+                        System.out.println("----------------      You Win       ------------------");
+                        System.out.println("------------------------------------------------------");
+                        System.out.println("------------------------------------------------------");
+                        drawer.clear();
                         break;
                     } else {
                         System.out.print("\u001b[2J");
                         System.out.flush();
                         if (state != -1) {
-                            current_maze.showMaze();
+                            drawer.drawView(current_maze, avatar.getCol(), avatar.getRow());
                             //if there is an enemy variable = 0 if there is an artefact =1
                             int which_element = current_maze.who_in_cell(avatar.getRow(), avatar.getCol());
                             System.out.println(current_maze.getMaze()[avatar.getRow()][avatar.getCol()].isEnemy_exits());
@@ -121,10 +126,11 @@ public class Game {
                                 current_maze.showMaze();
                             }
                         } else {
-                            current_maze.showMaze();
-                            System.out.println("");
-                            System.out.println("Is a wall. Choose another move");
-
+                            //current_maze.showMaze();
+                            //System.out.println("");
+                            //drawer.clear();
+                            drawer.drawView(current_maze, avatar.getCol(), avatar.getRow());
+                            System.out.println(">>>>Is a wall. Choose another move");
                         }
 
                     }

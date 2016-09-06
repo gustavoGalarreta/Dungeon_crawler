@@ -79,7 +79,7 @@ public class Maze {
     // INSTANCE METHODS        
 
     public boolean these_coordinates_are_in_maze(int row, int col){
-        if ( (row > 0 && row < height) && (col > 0 && col < width) )
+        if ( (row >= 0 && row < height) && (col >= 0 && col < width) )
             return true;
         else
             return false;
@@ -290,10 +290,13 @@ public class Maze {
         return maze[row][col].is_wall();
     }
     public boolean has_monster(int row, int col){
-        return false;
+        return maze[row][col].isEnemy_exits();
     }
     public boolean has_potion(int row, int col){
         return false;
+    }        
+    public boolean has_artefact(int row, int col){
+        return maze[row][col].isArtefact_exists();
     }        
     public boolean is_free(int row, int col){
         boolean aux=is_path(row, col);
