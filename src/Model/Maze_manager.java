@@ -13,8 +13,8 @@ public class Maze_manager {
     public Maze_manager(){
         
     }
-    public Maze create_maze(){
-        Maze maze = Maze.generateMaze();
+    public Maze create_maze(int size){
+        Maze maze = Maze.generateMaze(size);
         return maze;
     }
 }

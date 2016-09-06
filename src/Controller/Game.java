@@ -24,9 +24,12 @@ public class Game {
     private ArrayList<Maze> mazes = new ArrayList<Maze>();
     private int current_maze_in_mazes;
     private Avatar avatar;
-    //private Dibujador dibujador
+    private Drawer drawer = new Drawer(11, 11);
 
-    public Game() {
+    public Game(){
+        
+    }
+    public void game_init(){
         int movement_arrows, state, move;
         String action, movement_keyboard, straux;
         int interact_with_artefact;
@@ -72,8 +75,8 @@ public class Game {
                 System.out.println("invalid move");
             } else {
                 state = play(move);
-                //dibujador
-                if (state == 0) {
+                drawer.drawView(current_maze, avatar.getCol(), avatar.getRow());
+                if (state == 0){
                     //clean
                     System.out.println("You Lose");
                     break;
@@ -189,10 +192,12 @@ public class Game {
         int health_points = 0;
         String name = "";
         setAmount_mazes(amount);
-        Maze_manager maze_manager = new Maze_manager();
-        while (maze_fetcher <= amount_mazes) {
+        while(maze_fetcher <= amount_mazes){
             Maze new_maze;
-            new_maze = maze_manager.create_maze();
+            //int size = Maze.randomNumberGenerator(15);
+            int size =7;
+            Maze_manager maze_manager = new Maze_manager();
+            new_maze = maze_manager.create_maze(size);
             mazes.add(new_maze);
             maze_fetcher++;
         }
@@ -204,10 +209,7 @@ public class Game {
         avatar = new Avatar(name, avatar_row, avatar_col, health_points);
         //load_monsters();
         //dibujador
-        //Drawer dibujador= new Drawer(5, 5);
-        //dibujador.drawView(current_maze, avatar_col, avatar_row);   REVISAR DIBUJADOR QUE NO DIBUJA COMO DEBE SER
-        current_maze.showMaze();
-
+        drawer.drawView(current_maze, avatar_col, avatar_row);
     }
 
     public void load_monsters() {
