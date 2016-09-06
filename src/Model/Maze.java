@@ -274,25 +274,25 @@ public class Maze {
     }
     
     public boolean is_path(int row, int col){
-        return true;
+        return maze[row][col].is_path();
     }
     public boolean is_wall(int row, int col){
-        return true;
+        return maze[row][col].is_wall();
     }
     public boolean has_monster(int row, int col){
-        return true;
+        return false;
     }
     public boolean has_potion(int row, int col){
-        return true;
+        return false;
     }        
     public boolean is_free(int row, int col){
-        return true;
+        return is_path(row, col) && !is_next(row, col) && !is_prev(row, col);
     }
     public boolean is_next(int row, int col){
-        return true;
+        return maze[row][col].is_start();
     }
     public boolean is_prev(int row, int col){
-        return true;
+        return maze[row][col].is_end();
     }
 
     /**
