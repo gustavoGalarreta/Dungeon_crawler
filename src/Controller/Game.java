@@ -21,9 +21,11 @@ public class Game {
     private ArrayList<Maze> mazes = new ArrayList<Maze>();
     private int current_maze_in_mazes;
     private  Avatar avatar;
-    //private Dibujador dibujador
    
-    public void Game(){
+    public Game(){
+        
+    }
+    public void game_init(){
         int movement_arrows, state, move;
         String action, movement_keyboard;
         init();
@@ -106,10 +108,12 @@ public class Game {
         int health_points = 0;
         String name = "";
         setAmount_mazes(amount);
-        Maze_manager maze_manager = new Maze_manager();
         while(maze_fetcher <= amount_mazes){
             Maze new_maze;
-            new_maze = maze_manager.create_maze();
+            //int size = Maze.randomNumberGenerator(15);
+            int size =7;
+            Maze_manager maze_manager = new Maze_manager();
+            new_maze = maze_manager.create_maze(size);
             mazes.add(new_maze);
             maze_fetcher++;
         }
@@ -122,7 +126,6 @@ public class Game {
         //dibujador
         Drawer dibujador= new Drawer(11, 11);
         dibujador.drawView(current_maze, avatar_col, avatar_row);
-        current_maze.showMaze();
     }
     public void load_monsters(){
         //TBD

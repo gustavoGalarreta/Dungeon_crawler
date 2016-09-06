@@ -6,7 +6,7 @@
 package Model;
 import java.util.Random;
 import java.util.*;
-
+import java.util.concurrent.ThreadLocalRandom;
 /**
  *
  * @author Gustavo
@@ -33,20 +33,19 @@ public class Maze {
     protected Maze(int size){
         height = width = size * 2 + 1;
         maze = new Cell[width][width];
+        int x =1;
         for(int row = 0; row < height; row++)
             for(int col = 0; col < width; col++){
                 maze[row][col] = new Cell();
-                if (row == 0 || row == height-1)
-                    maze[row][col].setWall();
-                else
-                    if (col == 0 || col == width-1)
-                        maze[row][col].setWall();
-                    else
-                        if ( (col % 2 == 0 || row % 2== 0) && !(col % 2 == 0 && row % 2 == 0))
-                            maze[row][col].setWall();
-                        else
-                            maze[row][col].setPath();
-                    }
+                maze[row][col].setWall();
+            }
+        for(int row = 0; row < height; row++)
+            for(int col = 0; col < width; col++){
+                if (col % 2 != 0 && row % 2 != 0 
+                        && row != 0 && row != height -1 
+                        && col != 0 && col != width -1)
+                    maze[row][col].setPath();
+            }   
     }    
 //-----------------------------------------------------------------------------//    
     //GETS
@@ -85,6 +84,14 @@ public class Maze {
     public int[] getUnvisitedCell(int[] initCell){
         //Integer directions[] = Maze.randomDirection(4);
         int[] directions = {1, 2, 3, 4};
+        Random rnd = ThreadLocalRandom.current();
+        for (int i = directions.length - 1; i > 0; i--)
+        {
+          int index = rnd.nextInt(i + 1);
+          int a = directions[index];
+          directions[index] = directions[i];
+          directions[i] = a;
+        }
         int validCell[] = new int[3];
         int direction, direction_fetcher = 0;
         boolean cell_is_selected = false;
@@ -211,9 +218,7 @@ public class Maze {
         }
     }
     
-    public static Maze generateMaze(){
-        int size = Maze.randomNumberGenerator(15);
-        //int size = 3; //test
+    public static Maze generateMaze(int size){
         int initCell[] = getRandomCellInMaze(), validCell[];
         //initCell[0] row   initCell[1] col
         //creating a maze - encapsulation
@@ -237,7 +242,7 @@ public class Maze {
             }
         }
         current_maze.set_start_maze();
-        current_maze.set_end_maze();;
+        current_maze.set_end_maze();
         return current_maze;
     }
 

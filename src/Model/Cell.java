@@ -40,7 +40,10 @@ public class Cell {
         return visited;
     }
     public void showCell(){
-        System.out.print(type);
+        if (is_wall())
+            System.out.print("#");
+        else
+            System.out.print(" ");
     }
    
     public boolean is_wall(){
