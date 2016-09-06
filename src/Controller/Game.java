@@ -5,6 +5,7 @@
  */
 package Controller;
 import Model.Avatar;
+import Model.Drawer;
 import Model.Maze;
 import Model.Maze_manager;
 import java.io.Console;
@@ -12,11 +13,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.io.IOException;
+import java.util.List;
 
 public class Game {
     private Maze current_maze;
     private int amount_mazes;
-    private ArrayList<Maze> mazes;
+    private ArrayList<Maze> mazes = new ArrayList<Maze>();
     private int current_maze_in_mazes;
     private  Avatar avatar;
     //private Dibujador dibujador
@@ -100,7 +102,7 @@ public class Game {
     }
 
     public void init(){
-        int amount = 3, maze_fetcher = 1, avatar_row, avatar_col;
+        int amount = 3, maze_fetcher = 0, avatar_row, avatar_col;
         int health_points = 0;
         String name = "";
         setAmount_mazes(amount);
@@ -118,6 +120,9 @@ public class Game {
         Avatar avatar = new Avatar(name, avatar_row, avatar_col, health_points);
         //load_monsters();
         //dibujador
+        Drawer dibujador= new Drawer(11, 11);
+        dibujador.drawView(current_maze, avatar_col, avatar_row);
+        current_maze.showMaze();
     }
     public void load_monsters(){
         //TBD

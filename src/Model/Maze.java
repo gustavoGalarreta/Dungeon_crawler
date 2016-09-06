@@ -135,7 +135,7 @@ public class Maze {
         for(int row = 0; row < getHeight(); row++){
             System.out.println("");
             for(int col = 0; col < getWidth(); col++)
-                maze[row][col].showCell();
+                getMaze()[row][col].showCell();
         }
     }
     
@@ -145,16 +145,16 @@ public class Maze {
         int direction = newValidCell[2];
         switch (direction){
             case 1: //up
-                maze[row + 1][col].setPath();
+                getMaze()[row + 1][col].setPath();
                 break;
             case 2: //down
-                maze[row - 1][col].setPath();
+                getMaze()[row - 1][col].setPath();
                 break;
             case 3: //right
-                maze[row][col - 1].setPath();
+                getMaze()[row][col - 1].setPath();
                 break;
             case 4:  //left
-                maze[row][col + 1].setPath();
+                getMaze()[row][col + 1].setPath();
                 break;
             default:
                 break;
@@ -164,7 +164,7 @@ public class Maze {
     public boolean can_be_visit_this_cell(int row, int col){
         boolean result = true;
         if (these_coordinates_are_in_maze(row, col)) 
-            return !maze[row][col].is_visited() && maze[row][col].is_path();
+            return !maze[row][col].is_visited() && getMaze()[row][col].is_path();
         else
             return false;
     }
@@ -178,7 +178,7 @@ public class Maze {
         return result;
     }
     public void set_cell_as_a_visited(int [] validCell){
-        maze[validCell[0]][validCell[1]].setVisited();
+        getMaze()[validCell[0]][validCell[1]].setVisited();
     }
     public void set_start_maze(){
         int start_row ,start_col;
@@ -186,7 +186,7 @@ public class Maze {
         while(true){
             start_row = Maze.randomNumberGenerator(height);
             start_col= Maze.randomNumberGenerator(width);
-            current_cell = maze[start_row][start_col];
+            current_cell = getMaze()[start_row][start_col];
             if (current_cell.is_path() && !current_cell.is_start() && !current_cell.is_end()){
                 current_cell.set_start();
                 setStart_row(start_row);
@@ -201,7 +201,7 @@ public class Maze {
         while(true){
             end_row = Maze.randomNumberGenerator(height);
             end_col= Maze.randomNumberGenerator(width);
-            current_cell = maze[end_row][end_col];
+            current_cell = getMaze()[end_row][end_col];
             if (current_cell.is_path() && !current_cell.is_start() && !current_cell.is_end()){
                 current_cell.set_end();
                 setEnd_row(end_row);
@@ -293,5 +293,19 @@ public class Maze {
     }
     public boolean is_prev(int row, int col){
         return true;
+    }
+
+    /**
+     * @return the maze
+     */
+    public Cell[][] getMaze() {
+        return maze;
+    }
+
+    /**
+     * @param maze the maze to set
+     */
+    public void setMaze(Cell[][] maze) {
+        this.maze = maze;
     }
 }
