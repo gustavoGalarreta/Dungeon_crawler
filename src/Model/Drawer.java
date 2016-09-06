@@ -34,7 +34,7 @@ public class Drawer {
     }
     
     //--funcion dibujar vista actual
-    public void drawView(Maze gameMaze, int x_ini, int y_ini){
+    public void drawView(Maze gameMaze, int x_ini, int y_ini){    //x es col y es row
         int row, col;
         for(row=y_ini-distance_b; row<=y_ini+distance_b; row++){
             for(col=x_ini-distance_a; col<=x_ini+distance_a; col++){
