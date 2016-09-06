@@ -6,6 +6,7 @@
 package Model;
 import java.util.Random;
 import java.util.*;
+import Util.Utilitarios;
 import java.util.concurrent.ThreadLocalRandom;
 /**
  *
@@ -29,6 +30,8 @@ public class Maze {
     private int end_row;
     private int end_col;
     //TBD start, next
+    private boolean already_visited;
+    private ArrayList<Enemy> enemies= new ArrayList<Enemy>();
     
     protected Maze(int size){
         height = width = size * 2 + 1;
@@ -243,6 +246,8 @@ public class Maze {
         }
         current_maze.set_start_maze();
         current_maze.set_end_maze();
+        current_maze.load_enemies();
+        //current_maze.load_artefacts();
         return current_maze;
     }
 
@@ -291,7 +296,9 @@ public class Maze {
         return false;
     }        
     public boolean is_free(int row, int col){
-        return is_path(row, col) && !is_next(row, col) && !is_prev(row, col);
+        boolean aux=is_path(row, col);
+        System.out.println(aux);
+        return is_path(row, col) && !is_next(row, col) && !is_prev(row, col) && !is_wall(row, col);
     }
     public boolean is_next(int row, int col){
         return maze[row][col].is_start();
@@ -313,4 +320,61 @@ public class Maze {
     public void setMaze(Cell[][] maze) {
         this.maze = maze;
     }
+    
+    
+    public void load_enemies(){
+        int MAXNUM_ENEMIES=5; //maximun number of enemies added in a maze , eg. 5
+        int i=0;
+        for(int row = 0; row < height; row++)
+            for(int col = 0; col < width; col++){
+                if( Utilitarios.getRandomBoolean() && !maze[row][col].is_wall() && !maze[row][col].is_end() && !maze[row][col].is_start() && i<=MAXNUM_ENEMIES){
+                    Enemy enemy_to_be_added= new Enemy("Enemigo", row, col, Maze.randomNumberGenerator(700), Maze.randomNumberGenerator(500));   //cambiar estos datos
+                    enemies.add(enemy_to_be_added);
+                    maze[row][col].setEnemy_exits(true);
+                    maze[row][col].setEnemy(enemy_to_be_added);
+                    i++;
+                }
+                    
+            }
+    }
+    
+    public void load_artefacts(){
+        int MAXNUM_ARTEFACTS=5; //maximun number of artefacts added in a maze , eg. 5
+        int i=0;
+        for(int row = 0; row < height; row++)
+            for(int col = 0; col < width; col++){
+                if( Utilitarios.getRandomBoolean() && !maze[row][col].is_wall() &&  i<=MAXNUM_ARTEFACTS && !maze[row][col].isEnemy_exits()){
+                    Artefact artefact_to_be_added;
+                    if(Utilitarios.getRandomBoolean()) {
+                        artefact_to_be_added=new Armor(Maze.randomNumberGenerator(400));
+                        maze[row][col].setArtefact_exists(true);
+                        maze[row][col].setArtefact(artefact_to_be_added);
+                        i++;
+                    }
+                    else{
+                        if(Utilitarios.getRandomBoolean()) {
+                            artefact_to_be_added=new Weapon(Maze.randomNumberGenerator(500));
+                            maze[row][col].setArtefact_exists(true);
+                            maze[row][col].setArtefact(artefact_to_be_added);
+                            i++;
+                        }
+                        else {
+                            artefact_to_be_added=new HealingPotion(Maze.randomNumberGenerator(100));
+                            maze[row][col].setArtefact_exists(true);
+                            maze[row][col].setArtefact(artefact_to_be_added);
+                            i++;
+                        }
+                    }
+                }
+                    
+            }
+    }
+    
+    
+    public int who_in_cell(int row, int col){
+        if (maze[row][col].isArtefact_exists()) return 1;
+        else if(maze[row][col].isEnemy_exits()) return 0;
+        else return 2;
+    }
+    
 }
