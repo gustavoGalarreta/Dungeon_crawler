@@ -20,8 +20,9 @@ public class Game {
     private int amount_mazes;
     private ArrayList<Maze> mazes = new ArrayList<Maze>();
     private int current_maze_in_mazes;
-    private  Avatar avatar;
-   
+    private Avatar avatar;
+    private Drawer drawer = new Drawer(11, 11);
+
     public Game(){
         
     }
@@ -45,7 +46,7 @@ public class Game {
             if ((5-move) == 5) System.out.println("invalid move");
             else {
                 state = play(move);
-                //dibujador
+                drawer.drawView(current_maze, avatar.getCol(), avatar.getRow());
                 if (state == 0){
                     //clean
                     System.out.println("You Lose");
@@ -124,8 +125,7 @@ public class Game {
         Avatar avatar = new Avatar(name, avatar_row, avatar_col, health_points);
         //load_monsters();
         //dibujador
-        Drawer dibujador= new Drawer(11, 11);
-        dibujador.drawView(current_maze, avatar_col, avatar_row);
+        drawer.drawView(current_maze, avatar_col, avatar_row);
     }
     public void load_monsters(){
         //TBD
