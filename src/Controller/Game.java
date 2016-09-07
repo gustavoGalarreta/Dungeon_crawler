@@ -81,7 +81,9 @@ public class Game {
                     break;
                 } else //Runtime.getRuntime().exec("clear");
                 {
-                    if (current_maze.is_prev(avatar.getRow(), avatar.getCol())) {
+//                    if (current_maze.is_prev(avatar.getRow(), avatar.getCol())) {
+                    //si no acabamos de llegar de otro maze, sino que estamos en el ultimo next-> ganaste
+                    if (state!=10 && state!=-10 && current_maze.is_next(avatar.getRow(), avatar.getCol()) ) {
                         drawer.clear();
                         System.out.println("------------------------------------------------------");
                         System.out.println("------------------------------------------------------");
@@ -171,19 +173,25 @@ public class Game {
                 avatar_row = current_maze.getStart_row();
                 avatar_col = current_maze.getStart_col();
                 avatar.move(avatar_row, avatar_col);
+                return 10; //flag significaa: se cambio al siguiente maze
             } else {
+                //si no puede cambiar de maze, es el ultimo->>> mover (no tiene mucho sentido lo que sigue al regresar)
+                avatar.move(new_row, new_col);
                 return 1;
             }
         } else if (current_maze.is_prev(new_row, new_col)) {
             //Todo
-            if ((current_maze_in_mazes - 1) != 0) {
+            if (current_maze_in_mazes != 0) { //si no es el primero -> load previous maze
                 //load monsters
-                setCurrent_maze_in_mazes(current_maze_in_mazes + 1);
-                current_maze = mazes.get(current_maze_in_mazes);
+                setCurrent_maze_in_mazes(current_maze_in_mazes - 1);
+                current_maze = mazes.get(current_maze_in_mazes); //el avatar aparece en el fin del maze previo.
                 avatar_row = current_maze.getEnd_row();
                 avatar_col = current_maze.getEnd_col();
                 avatar.move(avatar_row, avatar_col);
+                return -10;//flag significa: se cambio al previo
             } else {
+                //moverlo a la posicion y no cambiar de maze
+                avatar.move(new_row, new_col);
                 System.out.println("It's imposible to go back");
             }
         } else {
@@ -207,8 +215,11 @@ public class Game {
             mazes.add(new_maze);
             maze_fetcher++;
         }
-        //choose one random maze, maybe the first
-        int random_index = 1;   //we can call here a randomize function 
+        //choose one random maze, maybe the first <<<<???? 
+        //int random_index = 1;   //we can call here a randomize function 
+        //siempre mostrar desde el primero
+        int random_index = 0;  
+        
         current_maze = mazes.get(random_index);
         avatar_row = current_maze.getStart_row();
         avatar_col = current_maze.getStart_col();

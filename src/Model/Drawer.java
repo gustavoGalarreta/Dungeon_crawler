@@ -31,27 +31,21 @@ public class Drawer {
             
     public void drawCell(Maze gameMaze, int col, int row){
         Cell currentCell= gameMaze.getMaze()[row][col];
-        if(gameMaze.is_path(row, col)){
-            System.out.print(' ');
-        }
-        else if(gameMaze.is_wall(row, col))
-            System.out.print('#');
-        else if(gameMaze.is_next(row, col))
-            System.out.print('+');
-        else if(gameMaze.is_prev(row, col))
-            System.out.print('-');
-        else if(gameMaze.has_potion(row, col))
+        if(gameMaze.has_potion(row, col))
             System.out.print('P');
         else if(gameMaze.has_artefact(row, col))
             System.out.print('A');
         else if(gameMaze.has_monster(row, col))
             System.out.print('E');        
-        //start, end ??????????????
-        else if(gameMaze.getMaze()[row][col].is_start())
-            System.out.print('*');        
-        else if(gameMaze.getMaze()[row][col].is_end())
-            System.out.print('$');        
-        
+        else if(gameMaze.is_next(row, col))
+            System.out.print('+');
+        else if(gameMaze.is_prev(row, col))
+            System.out.print('-');
+        else if(gameMaze.is_path(row, col)){
+            System.out.print(' ');
+        }
+        else if(gameMaze.is_wall(row, col))
+            System.out.print('#');
     }
     
     //--funcion dibujar vista actual

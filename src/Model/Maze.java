@@ -304,10 +304,12 @@ public class Maze {
         return is_path(row, col) && !is_next(row, col) && !is_prev(row, col) && !is_wall(row, col);
     }
     public boolean is_next(int row, int col){
-        return maze[row][col].is_start();
+//        return maze[row][col].is_start();
+        return maze[row][col].is_end();
     }
     public boolean is_prev(int row, int col){
-        return maze[row][col].is_end();
+        //return maze[row][col].is_end();
+        return maze[row][col].is_start();
     }
 
     /**
