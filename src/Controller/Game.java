@@ -256,4 +256,89 @@ public class Game {
     public Maze get_current_maze() {
         return this.current_maze;
     }
+    
+    public void game_intro(){
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+ 
+        System.out.println("-----------------------------DUNGEON CRAWLER----------------------------");
+ 
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Press Enter to Continue ...");
+        String straux = sc.nextLine();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+                                                                                                                                                   
+        System.out.println("Hill giants are stealing all the grain and livestock they can while stone\ngiants have been scouring settlements that have been around forever.       \n "
+                        + "Fire giants are press-ganging the smallfolk into the desert, while frost  \ngiant longships have been pillaging along the Sword Coast. Even the elusive\n "
+                        + "cloud giants have been witnessed, their wondrous floating cities appearing\n above Waterdeep and Baldur’s Gate. Where is the storm giant King Hekaton,  \n "
+                        + "who is tasked with keeping order among the giants?\n");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("Press Enter to Continue ...");
+        String straux2 = sc.nextLine();
+        System.out.print("\u001b[2J");
+        System.out.flush();
+       
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("The humans, dwarves, elves, and other small folk of the Sword    \nCoast will be crushed underfoot from the onslaught of these giant foes.     \n "
+                        + "The only chance at survival is for the small folk to work together\nto investigate this invasion and harness the power of rune magic, the giants’\n"
+                        + "weapon against their ancient enemy the dragons. The only way the  \npeople of Faerun can restore order is to use the giants’ own power against them.");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("Press Enter to Continue ...");
+        String straux3 = sc.nextLine();
+        System.out.print("\u001b[2J");
+        System.out.flush();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println("                          LET'S START PLAYING...                 ");
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        System.out.println();
+        String straux4 = sc.nextLine();
+        System.out.print("\u001b[2J");
+        System.out.flush();
+    }
 }

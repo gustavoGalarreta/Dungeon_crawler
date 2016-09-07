@@ -16,6 +16,7 @@ public class Dungeon_crawler_lp2 {
 
     public static void main(String[] args) {
         Game game = new Game();
+        game.game_intro();
         game.game_init();
     }
     
