@@ -247,7 +247,7 @@ public class Maze {
         current_maze.set_start_maze();
         current_maze.set_end_maze();
         current_maze.load_enemies();
-        //current_maze.load_artefacts();
+        current_maze.load_artefacts();
         return current_maze;
     }
 
@@ -373,6 +373,10 @@ public class Maze {
                 }
                     
             }
+    }
+    
+    public void deleteArtefacts(int row, int col){
+        maze[row][col].setArtefact_exists(false);
     }
     
     

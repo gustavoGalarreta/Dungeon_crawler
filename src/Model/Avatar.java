@@ -17,6 +17,7 @@ public class Avatar extends Entity {
     public Avatar(String name,int row, int col, int max_life){
         super(row, col, max_life);
         this.name = name;
+        this.bag = new Bag(5);
     }
     
     public void new_artefact(Artefact artefact){

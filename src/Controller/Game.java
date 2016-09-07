@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.io.IOException;
 import java.util.List;
+import java.awt.Toolkit; 
 
 public class Game {
 
@@ -49,7 +50,7 @@ public class Game {
     public void game_init() {
         int movement_arrows, state, move;
         String action, movement_keyboard, straux;
-        int interact_with_artefact;
+        String interact_with_artefact;
         this.init();
         Scanner sc = new Scanner(System.in);
         Scanner scint = new Scanner(System.in);        
@@ -57,18 +58,20 @@ public class Game {
             game_info(); //print the movements and indications            
             movement_keyboard = sc.nextLine();
             move = 0;
-            if (movement_keyboard.equals("w")) {
+            if (movement_keyboard.equalsIgnoreCase("w")) {
                 move = 1;
             }
-            if (movement_keyboard.equals("s")) {
+            if (movement_keyboard.equalsIgnoreCase("s")) {
                 move = 2;
             }
-            if (movement_keyboard.equals("d")) {
+            if (movement_keyboard.equalsIgnoreCase("d")) {
                 move = 3;
             }
-            if (movement_keyboard.equals("a")) {
+            if (movement_keyboard.equalsIgnoreCase("a")) {
                 move = 4;
             }
+            if (movement_keyboard.equalsIgnoreCase("salir"))
+                break;
             if ((5 - move) == 5) {
                 drawer.drawView(current_maze, avatar.getCol(), avatar.getRow());
                 System.out.println(">>>>>>>invalid move");
@@ -85,6 +88,7 @@ public class Game {
                     //si no acabamos de llegar de otro maze, sino que estamos en el ultimo next-> ganaste
                     if (state!=10 && state!=-10 && current_maze.is_next(avatar.getRow(), avatar.getCol()) ) {
                         drawer.clear();
+                        Toolkit.getDefaultToolkit().beep();
                         System.out.println("------------------------------------------------------");
                         System.out.println("------------------------------------------------------");
                         System.out.println("----------------      You Win       ------------------");
@@ -113,19 +117,30 @@ public class Game {
                                 System.out.println("Do you want to get the artefact?");
                                 System.out.println("");
                                 System.out.println("Type:    [1]YES       or     [0]NO");
-                                interact_with_artefact = scint.nextInt();
-                                if (interact_with_artefact == 1) {
+                                interact_with_artefact = scint.nextLine();
+                                if(!(interact_with_artefact.equals("1")) && !(interact_with_artefact.equals("0"))){
+                                    while(true){ //verifica que no pongan lo que sea
+                                        System.out.println("Invalido");
+                                        System.out.println("Type:    [1]YES       or     [0]NO");
+                                        interact_with_artefact = scint.nextLine();
+                                        if((interact_with_artefact.equals("1")) || (interact_with_artefact.equals("0"))) 
+                                            break;
+                                    }
+                                }
+                                if (interact_with_artefact.equals("1")) {
                                     //linea de abajo estaa maaaaaal
                                     
                                     //avatar.new_artefact(current_maze.getMaze()[avatar.getRow()][avatar.getCol()].getArtefact());
+                                    avatar.new_artefact(current_maze.getMaze()[avatar.getRow()][avatar.getCol()].getArtefact());
+                                    //delete artefact
+                                    current_maze.deleteArtefacts(avatar.getRow(), avatar.getCol());
                                     System.out.println("Artefact added to bag successfully!");
                                     System.out.println("Press Enter to Continue ...");
                                     straux=sc.nextLine();
-
                                 }
                                 System.out.print("\u001b[2J");
                                 System.out.flush();
-                                current_maze.showMaze();
+                                drawer.drawView(current_maze, avatar.getCol(), avatar.getRow());
                             }
                         } else {
                             //current_maze.showMaze();

@@ -10,11 +10,10 @@ import java.util.*;
  * @author Marco
  */
 public class Bag {
-    protected List<Artefact> artefacts;
+    protected ArrayList<Artefact> artefacts = new ArrayList<Artefact>();
     private int max_capacity;
-    
+   
     public Bag(int max_capacity){
-        artefacts = new ArrayList<Artefact>();
         this.max_capacity = max_capacity;
     }
     
